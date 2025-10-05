@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoFinder - Predict</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-4 sm:p-8">
+
+    <!-- Header -->
+    <header class="text-center mb-12">
+        <h1 class="text-6xl font-extrabold text-teal-400 tracking-wider">ExoFinder</h1>
+        <p class="text-xl text-gray-400 mt-2">Welcome Analyze your TESS data.</p>
+    </header>
+    
+    <!-- Main Content Grid -->
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+        
+        <!-- Single Prediction Form -->
+        <div class="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-2xl border border-teal-500/30">
+            <h2 class="text-3xl font-bold mb-6 text-teal-300">Single Data Point Prediction</h2>
+            <p class="text-gray-400 mb-6">Input features for a single candidate to get an instant classification.</p>
+
+            <form action="{{ url_for('single') }}" method="POST" class="space-y-4">
+                
+                <!-- Input Fields Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <div>
+                        <label for="orbital_period" class="block text-sm font-medium text-gray-300">Orbital Period (days)</label>
+                        <input type="number" step="any" id="orbital_period" name="orbital_period" required class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-teal-500 focus:ring-teal-500 p-3">
+                    </div>
+                    
+                    <div>
+                        <label for="transit_duration" class="block text-sm font-medium text-gray-300">Transit Duration (hours)</label>
+                        <input type="number" step="any" id="transit_duration" name="transit_duration" required class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-teal-500 focus:ring-teal-500 p-3">
+                    </div>
+                    
+                    <div>
+                        <label for="planet_radius" class="block text-sm font-medium text-gray-300">Planet Radius ($R_{Earth}$)</label>
+                        <input type="number" step="any" id="planet_radius" name="planet_radius" required class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-teal-500 focus:ring-teal-500 p-3">
+                    </div>
+                    
+                    <div>
+                        <label for="transit_depth" class="block text-sm font-medium text-gray-300">Transit Depth (ppm)</label>
+                        <input type="number" step="any" id="transit_depth" name="transit_depth" required class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-teal-500 focus:ring-teal-500 p-3">
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label for="snr" class="block text-sm font-medium text-gray-300">Signal-to-Noise Ratio (SNR)</label>
+                        <input type="number" step="any" id="snr" name="snr" required class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-teal-500 focus:ring-teal-500 p-3">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-300 transform hover:scale-[1.01]">
+                    Classify Candidate
+                </button>
+            </form>
+        </div>
+
+        <!-- Batch Upload Form -->
+        <div class="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-2xl border border-teal-500/30">
+            <h2 class="text-3xl font-bold mb-6 text-teal-300">Batch CSV Upload</h2>
+            <p class="text-gray-400 mb-6">Upload a CSV file containing multiple candidates for mass prediction. <span class="font-semibold text-yellow-400">Required columns: orbital_period, transit_duration, planet_radius, transit_depth, snr.</span></p>
+
+            <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                
+                <label class="block">
+                    <span class="sr-only">Choose CSV file</span>
+                    <input type="file" name="file" accept=".csv" required class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 transition duration-200" />
+                </label>
+
+                <button type="submit" class="w-full py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-[1.01]">
+                    Run Batch Analysis
+                </button>
+            </form>
+            
+            <hr class="my-8 border-gray-700">
+
+            <h3 class="text-xl font-semibold mb-4 text-gray-200">Data Schema Example</h3>
+            <pre class="bg-gray-700 p-4 rounded-lg text-sm overflow-x-auto text-yellow-300 shadow-inner">
+<code class="whitespace-pre-wrap">
+kep_id,orbital_period,transit_duration,planet_radius,transit_depth,snr
+12345678,1.23,2.5,1.1,1200.5,150.3
+98765432,5.55,1.0,3.2,500.1,75.0
+</code>
+            </pre>
+        </div>
+
+    </div>
+
+</body>
+</html>

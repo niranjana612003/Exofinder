@@ -1,0 +1,14 @@
+# Virtual Environment
+venv/
+.venv/
+
+# Operating System junk
+.DS_Store
+Thumbs.db
+
+# Python compilation artifacts
+*.pyc
+__pycache__/
+
+# Other common ignore files (optional)
+.vscode/

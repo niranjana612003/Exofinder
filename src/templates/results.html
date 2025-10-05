@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Results | Exoplanet Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>📊 Prediction Results</h1>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Uploaded Data with Predictions</h2>
+      {% for table in tables %}
+        {{ table | safe }}
+      {% endfor %}
+    </section>
+    <a href="/" class="btn">⬅ Back to Home</a>
+  </main>
+</body>
+</html>

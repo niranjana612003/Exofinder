@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Single Result | Exoplanet Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>🔭 Candidate Prediction</h1>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Prediction Outcome</h2>
+      <p><strong>Prediction:</strong> {{ pred }}</p>
+      <p><strong>Probability (Planet):</strong> {{ prob | round(3) }}</p>
+    </section>
+    <a href="/" class="btn">⬅ Back to Home</a>
+  </main>
+</body>
+</html>
